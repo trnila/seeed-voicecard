@@ -540,8 +540,7 @@ static int seeed_voice_card_dai_link_of(struct device_node *node,
 	if (ret < 0)
 		goto dai_link_of_err;
 
-	ret = simple_util_set_dailink_name(dev, dai_link,
-						"%s-%s",
+	dai_link->name = dai_link->stream_name = devm_kasprintf(dev, GFP_KERNEL, "%s-%s", 
 						dai_link->cpus->dai_name,
 						#if _SINGLE_CODEC
 						dai_link->codecs->dai_name
@@ -549,8 +548,6 @@ static int seeed_voice_card_dai_link_of(struct device_node *node,
 						dai_link->codecs[0].dai_name
 						#endif
 	);
-	if (ret < 0)
-		goto dai_link_of_err;
 
 	dai_link->ops = &seeed_voice_card_ops;
 	dai_link->init = seeed_voice_card_dai_init;
