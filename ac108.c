@@ -853,7 +853,7 @@ static int ac108_set_fmt(struct snd_soc_dai *dai, unsigned int fmt) {
 	dev_dbg(dai->dev, "%s\n", __FUNCTION__);
 
 	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
-	case SND_SOC_DAIFMT_CBM_CFM:    /*AC108 Master*/
+	case SND_SOC_DAIFMT_CBP_CFP:    /*AC108 Master*/
 		if (! ac10x->i2c101 || _MASTER_MULTI_CODEC == _MASTER_AC108) {
 			dev_dbg(dai->dev, "AC108 set to work as Master\n");
 			/**
@@ -869,7 +869,7 @@ static int ac108_set_fmt(struct snd_soc_dai *dai, unsigned int fmt) {
 			dev_dbg(dai->dev, "used as slave when AC101 is master\n");
 		}
 		fallthrough;
-	case SND_SOC_DAIFMT_CBS_CFS:    /*AC108 Slave*/
+	case SND_SOC_DAIFMT_CBC_CFC:    /*AC108 Slave*/
 		dev_dbg(dai->dev, "AC108 set to work as Slave\n");
 		/**
 		 * 0x30:chip is slave mode, BCLK & LRCK input,enable SDO1_EN and 
