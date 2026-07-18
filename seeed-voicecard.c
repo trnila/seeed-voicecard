@@ -667,9 +667,22 @@ static int seeed_voice_card_parse_of(struct device_node *node,
 			goto card_parse_end;
 	}
 
-	ret = simple_util_parse_card_name(&priv->snd_card, PREFIX);
-	if (ret < 0)
-		goto card_parse_end;
+	ret = snd_soc_of_parse_card_name(&priv->snd_card, "label");
+	if (ret < 0 || !priv->snd_card.name) {
+		char prop[128];
+
+		snprintf(prop, sizeof(prop), "%sname", PREFIX);
+		ret = snd_soc_of_parse_card_name(&priv->snd_card, prop);
+		if (ret < 0)
+			goto card_parse_end;
+	}
+
+	if (!priv->snd_card.name && priv->snd_card.dai_link)
+		priv->snd_card.name = priv->snd_card.dai_link->name;
+
+	//ret = simple_util_parse_card_name(&priv->snd_card, PREFIX);
+	//if (ret < 0)
+	//	goto card_parse_end;
 
 	ret = seeed_voice_card_parse_aux_devs(node, priv);
 
