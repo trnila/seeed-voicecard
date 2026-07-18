@@ -540,9 +540,6 @@ static int seeed_voice_card_dai_link_of(struct device_node *node,
 	if (ret < 0)
 		goto dai_link_of_err;
 
-	dai_link->name = "ahoj";
-	dai_link->stream_name = "ahoj";
-
 	if (ret < 0)
 		goto dai_link_of_err;
 
@@ -663,8 +660,6 @@ static int seeed_voice_card_parse_of(struct device_node *node,
 		if (ret < 0)
 			goto card_parse_end;
 	}
-
-	priv->snd_card.name = "hello";
 
 
 	ret = seeed_voice_card_parse_aux_devs(node, priv);
@@ -874,7 +869,6 @@ static int seeed_voice_card_probe(struct platform_device *pdev)
 	seeed_debug_info(priv);
 
 	ret = devm_snd_soc_register_card(&pdev->dev, &priv->snd_card);
-	pr_err("ret: %d", ret);
 	if (ret >= 0)
 		return ret;
 
