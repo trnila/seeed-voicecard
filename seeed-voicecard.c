@@ -540,6 +540,15 @@ static int seeed_voice_card_dai_link_of(struct device_node *node,
 	if (ret < 0)
 		goto dai_link_of_err;
 
+	ret = simple_util_set_dailink_name(dev, dai_link,
+						"%s-%s",
+						dai_link->cpus->dai_name,
+						#if _SINGLE_CODEC
+						dai_link->codecs->dai_name
+						#else
+						dai_link->codecs[0].dai_name
+						#endif
+	);
 	if (ret < 0)
 		goto dai_link_of_err;
 
@@ -661,6 +670,9 @@ static int seeed_voice_card_parse_of(struct device_node *node,
 			goto card_parse_end;
 	}
 
+	ret = simple_util_parse_card_name(&priv->snd_card, PREFIX);
+	if (ret < 0)
+		goto card_parse_end;
 
 	ret = seeed_voice_card_parse_aux_devs(node, priv);
 
