@@ -272,7 +272,7 @@ static int snd_ac108_put_volsw(struct snd_kcontrol *kcontrol,
 	.tlv.p = (tlv_array), \
 	.info = snd_soc_info_volsw, .get = snd_ac108_get_volsw,\
 	.put = snd_ac108_put_volsw, \
-	.private_value = SOC_SINGLE_VALUE(reg, shift, max, invert, chip) }
+	.private_value = SOC_SINGLE_VALUE(reg, shift, 0, max, invert, chip) }
 
 /* single ac108 */
 static const struct snd_kcontrol_new ac108_snd_controls[] = {
